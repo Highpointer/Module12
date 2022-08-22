@@ -10,6 +10,8 @@ function init() {
           .text(sample)
           .property("value", sample);
       });
+      var sampleFirst = sampleNames[0];
+      buildMetadata(sampleFirst);
   })}
 
   function optionChanged(newSample) {
