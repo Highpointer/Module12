@@ -53,23 +53,6 @@ function buildMetadata(sample) {
   });
 }
 
-function buildMetadata(sample) {
-  d3.json("samples.json").then((data) => {
-    var metadata = data.metadata;
-    var resultArray = metadata.filter(sampleObj => sampleObj.id == sample);
-    var result = resultArray[0];
-    var PANEL = d3.select("#sample-metadata");
-
-    PANEL.html("");
-    PANEL.append("h6").text("ID: " + result.id);
-    PANEL.append("h6").text("ETHNICITY: " + result.ethnicity);
-    PANEL.append("h6").text("SEX: " + result.gender);
-    PANEL.append("h6").text("AGE: " + result.age);
-    PANEL.append("h6").text("LOCATION: " + result.location);
-    PANEL.append("h6").text("BBTYPE: " + result.bbtype);
-    PANEL.append("h6").text("WFREQ: " + result.wfreq);
-  });
-}
 // 1. Create the buildCharts function.
 function buildCharts(sample) {
   // 2. Use d3.json to load and retrieve the samples.json file 
@@ -83,7 +66,7 @@ function buildCharts(sample) {
 
     // 4. Create a variable that filters the samples for the object with the desired sample number.
 
-    //  5. Create a variable that holds the first sample in the array.
+    // 5. Create a variable that holds the first sample in the array.
 
 
     // 6. Create variables that hold the otu_ids, otu_labels, and sample_values.
