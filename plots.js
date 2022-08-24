@@ -1,4 +1,5 @@
 function init() {
+   document.body.style.background = "lightblue";
     // Grab a reference to the dropdown select element
     var selector = d3.select("#selDataset");
 
@@ -29,7 +30,7 @@ function init() {
     buildMetadata(newSample);
     buildCharts(newSample);  
   }
-
+// Code is written to create the arrays when a sample is selected from the dropdown menu (10 pt)
   function buildMetadata(sample) {
     d3.json("samples.json").then((data) => {
       console.log("data: ", data);
@@ -55,8 +56,10 @@ function init() {
   }
 
   // 1. Create the buildCharts function
+  // Code is written to create the trace object in the buildCharts() function, and it contains the following: (10 pt)
+
   function buildCharts(sample) {
-    // 2. Use d3.json to load and retrieve the samples.json file 
+    // 2. Use d3.json to load and retrieve the samples.json file
     d3.json("samples.json").then((data) => {
       var metadata = data.metadata;
       var resultArray = metadata.filter(sampleObj => sampleObj.id == sample);
@@ -79,10 +82,12 @@ function init() {
       var PANEL2 = d3.select("#sample-metadata");
       console.log("PANEL:", PANEL2);
  
-      PANEL2.append("h6").text("OTU IDS: " + result2.otu_ids.slice(0,10));
-      PANEL2.append("h6").text("SAMPLE VALUES: " + result2.sample_values.sort(function(a, b){return b-a}).slice(0,10));
+      //PANEL2.append("h6").text("OTU IDS: " + result2.otu_ids.slice(0,10));
+      //PANEL2.append("h6").text("SAMPLE VALUES: " + result2.sample_values.sort(function(a, b){return b-a}).slice(0,10));
       //PANEL2.append("h6").text("OTU LABELS: " + result2.otu_labels.slice(0,10));
       // 7.    Create the yticks for the bar chart
+      // The y values are the otu_ids in descending order
+      // The x values are the sample_values in descending order
       var yticks = result2.otu_ids.slice(0,10);
       console.log("yticks: ", yticks);
       for (let i = 0; i < 10; i++) {
@@ -93,6 +98,10 @@ function init() {
       console.log("OTU values: ", result2.sample_values.sort(function(a, b){return b-a}).slice(0,10));
       
       // 8. Create the trace for the bar chart. 
+      // The hover text is the otu_labels in descending order
+
+      // Code is written to create the layout array in the buildCharts() function that creates a title for the chart (5 pt)
+      // When the dashboard is first opened in a browser, ID 940’s data should be displayed in the dashboard, and the bar chart has the following: (10 pt)
       var traceBar = {
         x: result2.sample_values.sort(function(a, b){return b-a}).slice(0,10),
         y: yticks,
@@ -100,7 +109,6 @@ function init() {
         type: "bar",
         orientation: 'h',
         text: result2.otu_labels,
-        //hovertemplate: result2.otu_labels.slice(0,10),
       };
       var barData = [traceBar];
 
@@ -108,14 +116,14 @@ function init() {
       var traceBubble = {
         x: result2.otu_ids,
         y: result2.sample_values,
-        text: result2.otu_labels,
+        text: result2.otu_labels, //The text for a bubble is shown when hovered over
         mode: 'markers',
         //orientation: 'h',
         marker: {
          color: result2.otu_ids,
          colorscale: 'Earth',
          size: result2.sample_values,
-         hovertemplate: result2.otu_labels,
+        // text: result2.otu_labels,
         }
       };
       var bubbleData = [traceBubble];
@@ -150,22 +158,36 @@ function init() {
     // // 9. Create the layout for the bar chart. 
       var barLayout = {
         title: "Top 10 Bacteria Cultures Found",
+        font: {
+          family: 'Times New Roman',
+          size: 15,
+          color: 'red'
+        },
     //  xaxis: {title: "Sample Values"},
         width: 500,
+        height: 400,
         yaxis: {autorange:'reversed'}
       };
 
     // 2. Create the layout for the bubble chart.
       var bubbleLayout = {
         title: 'Bacteria Cultures Per Sample',
+        font: {
+          family: 'Times New Roman',
+          size: 15,
+          color: 'red'
+        },
         xaxis: {title: "OTU ID"},
         showlegend: false,
+        width: 1150,
         height: 600,
       };
 
     // 5. Create the layout for the gauge chart.
     var gaugeLayout = { 
-      width: 500, height: 320, margin: { t: 0, b: 0 }
+      width: 468, 
+      height: 400, 
+      margin: { t: 0, b: 0 }
     };
 
     // 10. Use Plotly to plot the data with the layout. 
